@@ -1,8 +1,14 @@
 # Описание
-WEB интерфейс для взаимодействия с системами контроля доступа не имющими своего интерфейса для пользователей.
-Позволяет контролировать:
-* права на доступ к дверям.
-* кто может менять права и создавать пользователей
+Существует множество СКУД в офисах предлагающих ограниченный набор функций.
+Это веб приложение должно расширить их функционал добавив:
+* Открытие с телефона(в том числе дистанционное) 
+* Просмотр логов открытий
+Для подключения существующая ситема должна обладать возможностью передачи данных:
+* TCP/IP
+* COM (требуется дополнительное кстройство)
+Позволяет администраторам настраивать:
+* права на доступ к дверям каждому пользователю в отдельности.
+* назначать различные права по отдельности
 ## Наименование
 LockSystem
 ## Предметная область
@@ -31,16 +37,17 @@ users
 
 auth
 
-| name         | type     | constraints | description            | default           |
-|--------------|----------|-------------|------------------------|-------------------|
-| auth_logs_id | bigint   | PRIMARY     | Logs id                | AUTO_INCREMENT    |
-| user_id      | int      |             | User id                |                   |
-| ip           | text     |             | Ip of device           |                   |
-| last_action  | datetime |             | Creation time          | CURRENT_TIMESTAMP |
-| first_enter  | text     |             | First enter in sysyem  | CURRENT_TIMESTAMP |
-| useragent    | text     |             | Useragent from browser |                   |
-| session_hash | text     |             | Auth string            |                   |
-| work_for     | datetime |             | End of work            |                   |
+| name         | type     | constraints | description            | default              |
+|--------------|----------|-------------|------------------------|----------------------|
+| auth_id      | int      | PRIMARY     | Logs id                | AUTO_INCREMENT       |
+| user_id      | int      |             | User id                |                      |
+| ip           | text     |             | Ip of device           |                      |
+| last_action  | datetime |             | Creation time          | CURRENT_TIMESTAMP    |
+| first_enter  | datetime |             | First enter in sysyem  | CURRENT_TIMESTAMP    |
+| expired_in   | datetime |             | Expired time           | CURRENT_TIMESTAMP+?D |
+| useragent    | text     |             | Useragent from browser |                      |
+| session_hash | text     |             | Auth string            |                      |
+| work_for     | datetime |             | End of work            |                      |
 
 doors
 
