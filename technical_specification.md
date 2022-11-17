@@ -26,6 +26,13 @@ systems
 | address   | text       | UNIQUE      | Login for system |                |
 | onoff     | tinyint(1) |             | On or off system | False          |
 | parent_id | int        |             | Parant id        | NULL           |
+| lock_url  | text       |             | URL to open lock |                |
+
+Дополнительная информация:
+
+lock_url - адрес сервера отвечающего за открытия дверей. Должен содержать макрос ${local_door_id}, на место которого будет подставлен номер двери
+
+
 
 users
 
@@ -36,6 +43,7 @@ users
 | name      | text     |             | Username      |                   |
 | create_at | datetime |             | Creation time | CURRENT_TIMESTAMP |
 | password  | text     |             | User password |                   |
+
 
 auth
 
@@ -51,6 +59,7 @@ auth
 | session_hash | text     |             | Auth string            |                      |
 | work_for     | datetime |             | End of work            |                      |
 
+
 doors
 
 | name          | type | constraints | description   | default        |
@@ -59,6 +68,11 @@ doors
 | sys_id        | int  |             | System id     |                |
 | local_door_id | int  |             | Local door id |                |
 | name          | text |             | Name of door  |                |
+
+Дополнительная информация:
+
+local_door_id - номер двери использующийся в запросе для открытия
+
 
 list
 
@@ -80,11 +94,11 @@ permissions
 
 permissions_name
 
-| name         | type | constraints | description   | default        |
-|--------------|------|-------------|---------------|----------------|
-| perm_name_id | int  | PRIMARY     | Permission id | AUTO_INCREMENT |
-| name         | int  |             | User id       |                |
-| type         | bool |             | Diff system   |                |
+| name         | type | constraints | description        | default        |
+|--------------|------|-------------|--------------------|----------------|
+| perm_name_id | int  | PRIMARY     | Permission id      | AUTO_INCREMENT |
+| name         | text |             | Name of permission |                |
+
 
 # Пользовательские роли
 Возможность выдачи прав
