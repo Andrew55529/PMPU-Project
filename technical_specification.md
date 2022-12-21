@@ -9,8 +9,9 @@
 * COM (требуется дополнительное устройство)
 
 Позволяет администраторам настраивать:
-* права на доступ к дверям каждому пользователю в отдельности.
-* назначать различные права по отдельности
+* Права на доступ к дверям каждому пользователю в отдельности.
+* Назначать различные права по отдельности
+* Создавать двери
 ## Наименование
 LockSystem
 ## Предметная область
@@ -36,28 +37,30 @@ lock_url - адрес сервера отвечающего за открыти�
 
 users
 
-| name      | type     | constraints | description   | default           |
-|-----------|----------|-------------|---------------|-------------------|
-| user_id   | int      | PRIMARY     | User id       | AUTO_INCREMENT    |
-| sys_id    | text     |             | System id     |                   |
-| name      | text     |             | Username      |                   |
-| create_at | datetime |             | Creation time | CURRENT_TIMESTAMP |
-| password  | text     |             | User password |                   |
+| name       | type     | constraints | description           | default           |
+|------------|----------|-------------|-----------------------|-------------------|
+| user_id    | int      | PRIMARY     | User id               | AUTO_INCREMENT    |
+| sys_id     | text     |             | System id             |                   |
+| name       | text     |             | Username              |                   |
+| email      | text     |             | Email address         |                   |
+| create_at  | datetime |             | Creation time         | CURRENT_TIMESTAMP |
+| password   | text     |             | User password         |                   |
+| onoff      | int      |             | Status                |                   |
+| created_by | int      |             | Id of user who create |                   |
 
 
-auth
+sessions
 
-| name         | type     | constraints | description            | default              |
-|--------------|----------|-------------|------------------------|----------------------|
-| auth_id      | int      | PRIMARY     | Logs id                | AUTO_INCREMENT       |
-| user_id      | int      |             | User id                |                      |
-| ip           | text     |             | Ip of device           |                      |
-| last_action  | datetime |             | Creation time          | CURRENT_TIMESTAMP    |
-| first_enter  | datetime |             | First enter in sysyem  | CURRENT_TIMESTAMP    |
-| expired_in   | datetime |             | Expired time           | CURRENT_TIMESTAMP+?D |
-| useragent    | text     |             | Useragent from browser |                      |
-| session_hash | text     |             | Auth string            |                      |
-| work_for     | datetime |             | End of work            |                      |
+| name          | type     | constraints | description            | default              |
+|---------------|----------|-------------|------------------------|----------------------|
+| auth_id       | int      | PRIMARY     | Logs id                | AUTO_INCREMENT       |
+| user_id       | int      |             | User id                |                      |
+| ip            | text     |             | Ip of device           |                      |
+| last_action   | datetime |             | Creation time          | CURRENT_TIMESTAMP    |
+| first_enter   | datetime |             | First enter in sysyem  | CURRENT_TIMESTAMP    |
+| expired_in    | datetime |             | Expired time           | CURRENT_TIMESTAMP+?D |
+| useragent     | text     |             | Useragent from browser |                      |
+| refresh_token | text     |             | Auth string            |                      |
 
 
 doors
@@ -102,9 +105,8 @@ permissions_name
 
 # Пользовательские роли
 Возможность выдачи прав
-* Просмотр пользователей
-* Редактирование пользователей
 * Редактирование прав пользователей
+* Редактирование дверей
 
 # UI / API 
 Страницы
@@ -112,10 +114,13 @@ permissions_name
 * Страница с дверьми
 * Страница с пользователями
 * Страница управления пользователями
+* Страница добавления пользователя
+* Страница добавление дверей
+
 
 
 ## Язык программирования
-    Frontend: HTML,JavaScript(React)
+    Frontend: HTML,TypeScript(React)
     Backend: NodeJS(express)
 ## СУБД
     MariaDB
