@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TS [
+<!ELEMENT TS (TITLE,BLOCK+)>
+<!ELEMENT BLOCK (SUBTITLE,TEXT*,LIST*,TABLE*)>
+<!ELEMENT TABLE (TABLENAME,TR,TABLEADD)>
+<!ELEMENT TR (TDNAME,TDTYPE,TDCONSTAINS,TDDEFAULT)>
+<!ELEMENT TDNAME (#PCDATA)>
+<!ELEMENT TDTYPE (#PCDATA)>
+<!ELEMENT TDCONSTAINS (#PCDATA)>
+<!ELEMENT TDDESCRIPTION (#PCDATA)>
+<!ELEMENT TDDEFAULT (#PCDATA)>
+<!ELEMENT TABLENAME (#PCDATA)>
+<!ELEMENT TABLEADD (#PCDATA)>
+<!ELEMENT TITLE (#PCDATA)>
+<!ELEMENT SUBTITLE (#PCDATA)>
+<!ELEMENT TEXT (#PCDATA)>
+<!ELEMENT LIST (LI+)>
+<!ELEMENT LI (#PCDATA)>
+]>
+
+<TS>
+    <TITLE>Lock system. Техническое задание</TITLE>
+    <BLOCK>
+        <SUBTITLE>Описание</SUBTITLE>
+        <TEXT>Существует множество СКУД в офисах предлагающих ограниченный набор функций. Это веб приложение должно расширить их функционал добавив</TEXT>
+        <LIST>
+            <LI>Открытие с телефона(в том числе дистанционное)</LI>
+            <LI>Просмотр логов открытий</LI>
+        </LIST>
+        <TEXT>Для подключения существующая система должна обладать возможностью передачи данных</TEXT>
+        <LIST>
+            <LI>TCP/IP</LI>
+            <LI>COM (требуется дополнительное устройство)Просмотр логов открытий</LI>
+        </LIST>
+        <TEXT>Позволяет администраторам настраивать</TEXT>
+        <LIST>
+            <LI>Права на доступ к дверям каждому пользователю в отдельности</LI>
+            <LI>Назначать различные права по отдельности</LI>
+            <LI>Создавать двери</LI>
+        </LIST>
+    </BLOCK>
+
+    <BLOCK>
+        <SUBTITLE>Предметная область</SUBTITLE>
+        <TEXT>СКУД Система контроля и управления доступом</TEXT>
+    </BLOCK>
+
+    <BLOCK>
+        <SUBTITLE>Данные</SUBTITLE>
+        <TABLE>
+            <TABLENAME>systems</TABLENAME>
+            <TR>
+                <TDNAME>sys_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
+                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>name</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>Name of system   </TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>address</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDCONSTAINS>UNIQUE</TDCONSTAINS>
+                <TDDESCRIPTION>Login for system</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>onoff</TDNAME>
+                <TDTYPE>tinyint(1)</TDTYPE>
+                <TDDESCRIPTION>On or off system</TDDESCRIPTION>
+                <TDDEFAULT>1</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>parent_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>Parant id</TDDESCRIPTION>
+                <TDDEFAULT>NULL</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>lock_url</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>URL to open lock</TDDESCRIPTION>
+            </TR>
+            <TABLEADD><TEXT>lock_url - адрес сервера отвечающего за открытия дверей. Должен содержать макрос ${local_door_id}, на место которого будет подставлен номер двери</TEXT></TABLEADD>
+        </TABLE>
+        <TABLE>
+            <TABLENAME>users</TABLENAME>
+            <TR>
+                <TDNAME>user_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
+                <TDDESCRIPTION>User id  </TDDESCRIPTION>
+                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>sys_id  </TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>System id</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>name</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>Username</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>email</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>Email address</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>create_at</TDNAME>
+                <TDTYPE>datetime</TDTYPE>
+                <TDDESCRIPTION>Creation time</TDDESCRIPTION>
+                <TDDEFAULT>CURRENT_TIMESTAMP</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>password</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>User password</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>onoff</TDNAME>
+                <TDTYPE>tinyint(1)</TDTYPE>
+                <TDDESCRIPTION>Status</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>created_by</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>Id of user who create</TDDESCRIPTION>
+            </TR>
+        </TABLE>
+        <TABLE>
+            <TABLENAME>sessions</TABLENAME>
+            <TR>
+                <TDNAME>auth_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
+                <TDDESCRIPTION>Logs id</TDDESCRIPTION>
+                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>user_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>User id</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>ip</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>Ip of device</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>last_action</TDNAME>
+                <TDTYPE>datetime</TDTYPE>
+                <TDDESCRIPTION>Creation time</TDDESCRIPTION>
+                <TDDEFAULT>CURRENT_TIMESTAMP</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>first_enter</TDNAME>
+                <TDTYPE>datetime</TDTYPE>
+                <TDDESCRIPTION>First enter in sysyem</TDDESCRIPTION>
+                <TDDEFAULT>CURRENT_TIMESTAMP</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>expired_in</TDNAME>
+                <TDTYPE>datetime</TDTYPE>
+                <TDDESCRIPTION>Expired time</TDDESCRIPTION>
+                <TDDEFAULT>CURRENT_TIMESTAMP+?D</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>useragent</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>Useragent from browser</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>refresh_token</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>Auth string</TDDESCRIPTION>
+            </TR>
+        </TABLE>
+        <TABLE>
+            <TABLENAME>doors</TABLENAME>
+            <TR>
+                <TDNAME>door_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
+                <TDDESCRIPTION>Door id  </TDDESCRIPTION>
+                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>sys_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>System id</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>local_door_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>Local door id</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>name</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>Name of door</TDDESCRIPTION>
+            </TR>
+            <TABLEADD><TEXT>local_door_id - номер двери использующийся в запросе для открытия</TEXT></TABLEADD>
+        </TABLE>
+        <TABLE>
+            <TABLENAME>list</TABLENAME>
+            <TR>
+                <TDNAME>list_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
+                <TDDESCRIPTION>Id of list</TDDESCRIPTION>
+                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>user_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>User id</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>door_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>Door id</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>gived_by</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>User gived</TDDESCRIPTION>
+            </TR>
+        </TABLE>
+        <TABLE>
+            <TABLENAME>permissions</TABLENAME>
+            <TR>
+                <TDNAME>perm_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
+                <TDDESCRIPTION>Permission id</TDDESCRIPTION>
+                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>user_id </TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>User id</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>perm_name_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>Id of permission</TDDESCRIPTION>
+            </TR>
+            <TR>
+                <TDNAME>gived_by</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>Id of user who give</TDDESCRIPTION>
+            </TR>
+        </TABLE>
+        <TABLE>
+            <TABLENAME>permissions_name</TABLENAME>
+            <TR>
+                <TDNAME>perm_name_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
+                <TDDESCRIPTION>Permission id</TDDESCRIPTION>
+                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
+            </TR>
+            <TR>
+                <TDNAME>name</TDNAME>
+                <TDTYPE>text</TDTYPE>
+                <TDDESCRIPTION>Name of permission</TDDESCRIPTION>
+            </TR>
+        </TABLE>
+    </BLOCK>
+
+    <BLOCK>
+        <SUBTITLE>Пользовательские роли</SUBTITLE>
+        <TEXT>Возможность выдачи прав</TEXT>
+        <LIST>
+            <LI>Редактирование прав пользователей</LI>
+            <LI>ПРедактирование дверей</LI>
+        </LIST>
+    </BLOCK>
+
+    <BLOCK>
+        <SUBTITLE>UI / API</SUBTITLE>
+        <TEXT>Страницы</TEXT>
+        <LIST>
+            <LI>Вход</LI>
+            <LI>Страница с дверьми</LI>
+            <LI>Страница с пользователями</LI>
+            <LI>Страница управления пользователями</LI>
+            <LI>Страница добавления пользователя</LI>
+            <LI>Страница добавление дверей</LI>
+        </LIST>
+    </BLOCK>
+
+    <BLOCK>
+        <SUBTITLE>Язык программирования</SUBTITLE>
+        <LIST>
+            <LI>Frontend: HTML,TypeScript(React)</LI>
+            <LI>Backend: NodeJS(express)</LI>
+        </LIST>
+    </BLOCK>
+
+    <BLOCK>
+        <SUBTITLE>СУБД</SUBTITLE>
+        <LIST>
+            <LI>MariaDB</LI>
+        </LIST>
+    </BLOCK>
+</TS>
