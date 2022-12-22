@@ -13,10 +13,12 @@ USE `database`;
 DROP TABLE IF EXISTS `doors`;
 CREATE TABLE `doors` (
   `door_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sys_id` int(11) NOT NULL DEFAULT 0,
+  `sys_id` int(11) NOT NULL DEFAULT 1,
   `local_door_id` int(11) NOT NULL,
   `name` text NOT NULL,
-  PRIMARY KEY (`door_id`)
+  PRIMARY KEY (`door_id`),
+  KEY `sys_id` (`sys_id`),
+  CONSTRAINT `doors_ibfk_1` FOREIGN KEY (`sys_id`) REFERENCES `systems` (`sys_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `doors` (`door_id`, `sys_id`, `local_door_id`, `name`) VALUES
@@ -105,22 +107,26 @@ CREATE TABLE `sessions` (
 INSERT INTO `sessions` (`auth_id`, `user_id`, `ip`, `last_action`, `first_enter`, `expired_in`, `useragent`, `refresh_token`) VALUES
 (188,	163,	'127.0.0.1',	'2022-12-21 23:58:54',	'2022-12-21 23:58:54',	'2022-12-28 23:58:54',	'unknown|PostmanRuntime',	'JfGMEOm7NVofK5TnoeGHGGI8mb07Mvw4kQe4PDOXUw9NOYXj'),
 (189,	163,	'127.0.0.1',	'2022-12-21 23:59:24',	'2022-12-21 23:59:24',	'2022-12-28 23:59:24',	'unknown|PostmanRuntime',	'Yfqz6Lyy6zKU9WoRITjONYmV5sPxeBFAgoPVSCFOUoH1AV5p'),
-(193,	163,	'127.0.0.1',	'2022-12-22 02:14:17',	'2022-12-22 02:14:17',	'2022-12-29 02:14:17',	'Windows 10.0|YaBrowser',	'nO3T29MhEXLvPPqICe7xUSOhonJS3fFQH93sVHGaXuGGmeI7');
+(193,	163,	'127.0.0.1',	'2022-12-22 02:24:02',	'2022-12-22 02:14:17',	'2022-12-29 02:24:02',	'Windows 10.0|YaBrowser',	'u6E7iN346wT7V7j17lkQp8GOrydHwMFyVCqi9gNUpxpWTl0a');
 
 DROP TABLE IF EXISTS `systems`;
 CREATE TABLE `systems` (
   `sys_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `onoff` tinyint(4) NOT NULL DEFAULT 0,
+  `parent_id` int(11) DEFAULT NULL,
+  `lock_url` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`sys_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Список Баз';
 
-INSERT INTO `systems` (`sys_id`, `name`) VALUES
-(1,	'Office1');
+INSERT INTO `systems` (`sys_id`, `name`, `address`, `onoff`, `parent_id`, `lock_url`) VALUES
+(1,	'Office1',	'office',	1,	NULL,	'http://lock.com/api/open/${local_door_id}');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sys_id` int(11) NOT NULL DEFAULT 0,
+  `sys_id` int(11) NOT NULL DEFAULT 1,
   `name` text NOT NULL,
   `email` text DEFAULT NULL,
   `create_at` datetime NOT NULL DEFAULT current_timestamp(),
@@ -128,12 +134,14 @@ CREATE TABLE `users` (
   `github_id` int(11) DEFAULT NULL,
   `onoff` tinyint(4) NOT NULL DEFAULT 1,
   `created_by` int(11) DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  KEY `sys_id` (`sys_id`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`sys_id`) REFERENCES `systems` (`sys_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `users` (`user_id`, `sys_id`, `name`, `email`, `create_at`, `password`, `github_id`, `onoff`, `created_by`) VALUES
-(163,	0,	'100',	'email@email.com',	'2022-12-21 23:58:54',	'$2b$04$1NzMHG/kyihih8t.2VwiwOg/ADCi0y30mk7wL6btqwqr6fTL6EN2W',	NULL,	1,	NULL),
-(164,	0,	'lashkov8',	'lashkov8@gmail.com',	'2022-12-22 02:06:55',	'$2b$04$RaQuXH1UagnM9447f//m0.OCvfePolXSau5uq8CIXVLh.cStapX6K',	29784571,	1,	163),
-(165,	0,	'lashkov.an',	'lashkov.an@mail.ru',	'2022-12-22 02:07:11',	'$2b$04$SFpluRaHckGhvMKsHD3w6exSSB6O.R7xpiaML1K.STiqVZp8eUs.e',	NULL,	0,	163);
+(163,	1,	'100',	'email@email.com',	'2022-12-21 23:58:54',	'$2b$04$1NzMHG/kyihih8t.2VwiwOg/ADCi0y30mk7wL6btqwqr6fTL6EN2W',	NULL,	1,	NULL),
+(164,	1,	'lashkov8',	'lashkov8@gmail.com',	'2022-12-22 02:06:55',	'$2b$04$RaQuXH1UagnM9447f//m0.OCvfePolXSau5uq8CIXVLh.cStapX6K',	29784571,	1,	163),
+(165,	1,	'lashkov.an',	'lashkov.an@mail.ru',	'2022-12-22 02:07:11',	'$2b$04$SFpluRaHckGhvMKsHD3w6exSSB6O.R7xpiaML1K.STiqVZp8eUs.e',	NULL,	0,	163);
 
--- 2022-12-22 02:16:48
+-- 2022-12-22 09:10:07
