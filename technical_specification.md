@@ -66,6 +66,8 @@ LockSystem
 | onoff      | int      |             | Status                  | 1                 |
 | created_by | int      |             | Id of user who create   |                   |
 
+Сочетание `name` и `sys_id` должно быть уникальным
+
 Поле `email` нужно для отправки почты пользователю
 
 Поле `github_id` нужно для привязки github к аккаунтам в системе. Для последующего входа посредством OAuth.
@@ -118,6 +120,8 @@ local_door_id - номер двери использующийся в запро
 | door_id  | int  |             | Door id     |                |
 | gived_by | int  |             | User gived  |                |
 
+Сочетание `user_id` и `door_id` должно быть уникальным
+
 Поле `gived_by` нужны для понимания кто выдал право пользователю.
 
 Поле `door_id` Показывает какую дверь, может открывать пользователь.
@@ -130,6 +134,8 @@ local_door_id - номер двери использующийся в запро
 | user_id      | int  |             | User id             |                |
 | perm_name_id | int  |             | Id of permission    |                |
 | gived_by     | int  |             | Id of user who give |                |
+
+Сочетание `user_id` и `perm_name_id` должно быть уникальным
 
 Поле `gived_by` нужны для понимания кто выдал право пользователю.
 
