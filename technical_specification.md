@@ -18,7 +18,9 @@ LockSystem
 СКУД   Система контроля и управления доступом
 # Данные
 
-systems
+### systems
+
+Таблица systems нужна для масштабирования системы на одном сервере
 
 | name      | type       | constraints | description      | default        |
 |-----------|------------|-------------|------------------|----------------|
@@ -26,16 +28,17 @@ systems
 | name      | text       |             | Name of system   |                |
 | address   | text       | UNIQUE      | Login for system |                |
 | onoff     | tinyint(1) |             | On or off system | 1              |
-| parent_id | int        |             | Parant id        | NULL           |
+| parent_id | int        |             | Parent id        | NULL           |
 | lock_url  | text       |             | URL to open lock |                |
 
-Дополнительная информация:
 
-lock_url - адрес сервера отвечающего за открытия дверей. Должен содержать макрос ${local_door_id}, на место которого будет подставлен номер двери
+Поле `onoff` нужно для возможности временного отключения офиса
+
+Поле `lock_url` нужно для указания адрес сервера отвечающего за открытия дверей. Должен содержать макрос ${local_door_id}, на место которого будет подставлен номер двери
 
 
 
-users
+### users
 
 | name       | type     | constraints | description             | default           |
 |------------|----------|-------------|-------------------------|-------------------|
@@ -49,8 +52,16 @@ users
 | onoff      | int      |             | Status                  | 1                 |
 | created_by | int      |             | Id of user who create   |                   |
 
+Поле `email` нужно для отправки почты пользователю
 
-sessions
+Поле `github_id` нужно для привязки github к аккаунтам в системе. Для последующего входа посредством OAuth.
+
+Поле `created_by, create_at` нужно для понимая кто и когда создал пользователя
+
+
+
+
+### sessions
 
 | name          | type     | constraints | description            | default              |
 |---------------|----------|-------------|------------------------|----------------------|
@@ -62,9 +73,15 @@ sessions
 | expired_in    | datetime |             | Expired time           | CURRENT_TIMESTAMP+?D |
 | useragent     | text     |             | Useragent from browser |                      |
 | refresh_token | text     |             | Auth string            |                      |
+Поле `useragent` нужно для повышения безопасности, за счет него можно отсеять злоумышленника, который смогу украсть только access token
 
+Поле `refresh_token` нужно для повышения безопасности, за счет него можно закрывать конкретные сессии.
 
-doors
+Поле `expired_in` нужно для повышения безопасности, за счет него можно ограничивается время действия сессии.
+
+Поля `ip`, `last_action`,`first_enter`,`useragent`  нужны для понимания пользователем, что за устройство и когда оно было активно.
+
+### doors
 
 | name          | type | constraints | description   | default        |
 |---------------|------|-------------|---------------|----------------|
@@ -78,7 +95,7 @@ doors
 local_door_id - номер двери использующийся в запросе для открытия
 
 
-list
+### list
 
 | name     | type | constraints | description | default        |
 |----------|------|-------------|-------------|----------------|
@@ -87,7 +104,11 @@ list
 | door_id  | int  |             | Door id     |                |
 | gived_by | int  |             | User gived  |                |
 
-permissions
+Поле `gived_by` нужны для понимания кто выдал право пользователю.
+
+Поле `door_id` Показывает какую дверь, может открывать пользователь.
+
+### permissions
 
 | name         | type | constraints | description         | default        |
 |--------------|------|-------------|---------------------|----------------|
@@ -96,13 +117,21 @@ permissions
 | perm_name_id | int  |             | Id of permission    |                |
 | gived_by     | int  |             | Id of user who give |                |
 
-permissions_name
+Поле `gived_by` нужны для понимания кто выдал право пользователю.
+
+Поле `perm_name_id` Показывает какое право добавлено пользователю.
+
+
+### permissions_name
 
 | name         | type | constraints | description        | default        |
 |--------------|------|-------------|--------------------|----------------|
 | perm_name_id | int  | PRIMARY     | Permission id      | AUTO_INCREMENT |
 | name         | text |             | Name of permission |                |
 
+Поле `perm_name_id` - нужно для связи таблиц.
+
+Поле `name` нужно для отображения, что дает это права.
 
 # Пользовательские роли
 Возможность выдачи прав
