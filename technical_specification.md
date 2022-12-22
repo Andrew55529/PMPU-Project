@@ -128,7 +128,6 @@ local_door_id - номер двери использующийся в запро
 
 | name         | type | constraints | description         | default        |
 |--------------|------|-------------|---------------------|----------------|
-| perm_id      | int  | PRIMARY     | Permission id       | AUTO_INCREMENT |
 | user_id      | int  |             | User id             |                |
 | perm_name_id | int  |             | Id of permission    |                |
 | gived_by     | int  |             | Id of user who give |                |
