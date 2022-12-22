@@ -215,13 +215,6 @@
         <TABLE>
             <TABLENAME>list</TABLENAME>
             <TR>
-                <TDNAME>list_id</TDNAME>
-                <TDTYPE>int</TDTYPE>
-                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
-                <TDDESCRIPTION>Id of list</TDDESCRIPTION>
-                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
-            </TR>
-            <TR>
                 <TDNAME>user_id</TDNAME>
                 <TDTYPE>int</TDTYPE>
                 <TDDESCRIPTION>User id</TDDESCRIPTION>
@@ -239,13 +232,6 @@
         </TABLE>
         <TABLE>
             <TABLENAME>permissions</TABLENAME>
-            <TR>
-                <TDNAME>perm_id</TDNAME>
-                <TDTYPE>int</TDTYPE>
-                <TDCONSTAINS>PRIMARY</TDCONSTAINS>
-                <TDDESCRIPTION>Permission id</TDDESCRIPTION>
-                <TDDEFAULT>AUTO_INCREMENT</TDDEFAULT>
-            </TR>
             <TR>
                 <TDNAME>user_id </TDNAME>
                 <TDTYPE>int</TDTYPE>

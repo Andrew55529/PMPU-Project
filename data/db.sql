@@ -28,23 +28,21 @@ INSERT INTO `doors` (`door_id`, `sys_id`, `local_door_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `list`;
 CREATE TABLE `list` (
-  `list_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `door_id` int(11) NOT NULL,
   `gived_by` int(11) NOT NULL,
-  PRIMARY KEY (`list_id`),
   KEY `door_id` (`door_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `list_ibfk_1` FOREIGN KEY (`door_id`) REFERENCES `doors` (`door_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `list_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `list` (`list_id`, `user_id`, `door_id`, `gived_by`) VALUES
-(12,	163,	2,	163),
-(13,	163,	4,	163),
-(14,	163,	1,	163),
-(16,	164,	4,	163),
-(17,	164,	1,	163);
+INSERT INTO `list` (`user_id`, `door_id`, `gived_by`) VALUES
+(163,	2,	163),
+(163,	4,	163),
+(163,	1,	163),
+(164,	4,	163),
+(164,	1,	163);
 
 DROP TABLE IF EXISTS `logs`;
 CREATE TABLE `logs` (
@@ -61,21 +59,19 @@ CREATE TABLE `logs` (
 
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
-  `perm_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `perm_name_id` int(11) NOT NULL,
   `gived_by` int(11) NOT NULL,
-  PRIMARY KEY (`perm_id`),
   KEY `perm_name_id` (`perm_name_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `permissions_ibfk_1` FOREIGN KEY (`perm_name_id`) REFERENCES `permissions_name` (`perm_name_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `permissions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `permissions` (`perm_id`, `user_id`, `perm_name_id`, `gived_by`) VALUES
-(15,	163,	1,	163),
-(16,	163,	3,	163),
-(17,	163,	2,	163);
+INSERT INTO `permissions` (`user_id`, `perm_name_id`, `gived_by`) VALUES
+(163,	1,	163),
+(163,	3,	163),
+(163,	2,	163);
 
 DROP TABLE IF EXISTS `permissions_name`;
 CREATE TABLE `permissions_name` (
@@ -85,7 +81,7 @@ CREATE TABLE `permissions_name` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `permissions_name` (`perm_name_id`, `name`) VALUES
-(1,	'Право добавлять права на двери'),
+(1,	'Право редактировать пользователей'),
 (2,	'Право добавлять пользователей'),
 (3,	'Право добавлять изменять двери');
 
@@ -105,9 +101,7 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `sessions` (`auth_id`, `user_id`, `ip`, `last_action`, `first_enter`, `expired_in`, `useragent`, `refresh_token`) VALUES
-(188,	163,	'127.0.0.1',	'2022-12-21 23:58:54',	'2022-12-21 23:58:54',	'2022-12-28 23:58:54',	'unknown|PostmanRuntime',	'JfGMEOm7NVofK5TnoeGHGGI8mb07Mvw4kQe4PDOXUw9NOYXj'),
-(189,	163,	'127.0.0.1',	'2022-12-21 23:59:24',	'2022-12-21 23:59:24',	'2022-12-28 23:59:24',	'unknown|PostmanRuntime',	'Yfqz6Lyy6zKU9WoRITjONYmV5sPxeBFAgoPVSCFOUoH1AV5p'),
-(193,	163,	'127.0.0.1',	'2022-12-22 02:24:02',	'2022-12-22 02:14:17',	'2022-12-29 02:24:02',	'Windows 10.0|YaBrowser',	'u6E7iN346wT7V7j17lkQp8GOrydHwMFyVCqi9gNUpxpWTl0a');
+(193,	163,	'127.0.0.1',	'2022-12-22 12:52:50',	'2022-12-22 02:14:17',	'2022-12-29 12:52:50',	'Windows 10.0|YaBrowser',	'28E7qpfTGsUJWj69OT0IteKtXOVPXSD7YRpNpiJ6mna5Ps6E');
 
 DROP TABLE IF EXISTS `systems`;
 CREATE TABLE `systems` (
@@ -144,4 +138,4 @@ INSERT INTO `users` (`user_id`, `sys_id`, `name`, `email`, `create_at`, `passwor
 (164,	1,	'lashkov8',	'lashkov8@gmail.com',	'2022-12-22 02:06:55',	'$2b$04$RaQuXH1UagnM9447f//m0.OCvfePolXSau5uq8CIXVLh.cStapX6K',	29784571,	1,	163),
 (165,	1,	'lashkov.an',	'lashkov.an@mail.ru',	'2022-12-22 02:07:11',	'$2b$04$SFpluRaHckGhvMKsHD3w6exSSB6O.R7xpiaML1K.STiqVZp8eUs.e',	NULL,	0,	163);
 
--- 2022-12-22 09:10:07
+-- 2022-12-22 18:06:33

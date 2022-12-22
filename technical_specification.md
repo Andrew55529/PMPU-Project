@@ -114,7 +114,6 @@ local_door_id - номер двери использующийся в запро
 
 | name     | type | constraints | description | default        |
 |----------|------|-------------|-------------|----------------|
-| list_id  | int  | PRIMARY     | Id of list  | AUTO_INCREMENT |
 | user_id  | int  |             | User id     |                |
 | door_id  | int  |             | Door id     |                |
 | gived_by | int  |             | User gived  |                |
