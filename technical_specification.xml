@@ -121,9 +121,15 @@
                 <TDDESCRIPTION>User password</TDDESCRIPTION>
             </TR>
             <TR>
+                <TDNAME>github_id</TDNAME>
+                <TDTYPE>int</TDTYPE>
+                <TDDESCRIPTION>Need to login by github</TDDESCRIPTION>
+            </TR>
+            <TR>
                 <TDNAME>onoff</TDNAME>
                 <TDTYPE>tinyint(1)</TDTYPE>
                 <TDDESCRIPTION>Status</TDDESCRIPTION>
+                <TDDEFAULT>1</TDDEFAULT>
             </TR>
             <TR>
                 <TDNAME>created_by</TDNAME>
@@ -192,6 +198,7 @@
                 <TDNAME>sys_id</TDNAME>
                 <TDTYPE>int</TDTYPE>
                 <TDDESCRIPTION>System id</TDDESCRIPTION>
+                <TDDEFAULT>1</TDDEFAULT>
             </TR>
             <TR>
                 <TDNAME>local_door_id</TDNAME>

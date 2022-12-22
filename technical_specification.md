@@ -25,7 +25,7 @@ systems
 | sys_id    | int        | PRIMARY     |                  | AUTO_INCREMENT |
 | name      | text       |             | Name of system   |                |
 | address   | text       | UNIQUE      | Login for system |                |
-| onoff     | tinyint(1) |             | On or off system | False          |
+| onoff     | tinyint(1) |             | On or off system | 1              |
 | parent_id | int        |             | Parant id        | NULL           |
 | lock_url  | text       |             | URL to open lock |                |
 
@@ -37,16 +37,17 @@ lock_url - адрес сервера отвечающего за открыти�
 
 users
 
-| name       | type     | constraints | description           | default           |
-|------------|----------|-------------|-----------------------|-------------------|
-| user_id    | int      | PRIMARY     | User id               | AUTO_INCREMENT    |
-| sys_id     | text     |             | System id             |                   |
-| name       | text     |             | Username              |                   |
-| email      | text     |             | Email address         |                   |
-| create_at  | datetime |             | Creation time         | CURRENT_TIMESTAMP |
-| password   | text     |             | User password         |                   |
-| onoff      | int      |             | Status                |                   |
-| created_by | int      |             | Id of user who create |                   |
+| name       | type     | constraints | description             | default           |
+|------------|----------|-------------|-------------------------|-------------------|
+| user_id    | int      | PRIMARY     | User id                 | AUTO_INCREMENT    |
+| sys_id     | text     |             | System id               |                   |
+| name       | text     |             | Username                |                   |
+| email      | text     |             | Email address           |                   |
+| create_at  | datetime |             | Creation time           | CURRENT_TIMESTAMP |
+| password   | text     |             | User password           |                   |
+| github_id  | int      |             | Need to login by github |                   |
+| onoff      | int      |             | Status                  | 1                 |
+| created_by | int      |             | Id of user who create   |                   |
 
 
 sessions
@@ -68,7 +69,7 @@ doors
 | name          | type | constraints | description   | default        |
 |---------------|------|-------------|---------------|----------------|
 | door_id       | int  | PRIMARY     | Door id       | AUTO_INCREMENT |
-| sys_id        | int  |             | System id     |                |
+| sys_id        | int  |             | System id     | 1              |
 | local_door_id | int  |             | Local door id |                |
 | name          | text |             | Name of door  |                |
 
